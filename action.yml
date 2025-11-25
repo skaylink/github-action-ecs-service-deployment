@@ -1,0 +1,41 @@
+---
+# yamllint disable rule:line-length
+name: Deploy Managed ECS Service
+description: Deploy Managed ECS Service
+branding:
+  icon: package
+  color: orange
+inputs:
+  service:
+    description: The name of the ECS service to update.
+    required: true
+  image:
+    description: The container image to use for the service.
+    required: true
+  force:
+    description: Force deployment of same image.
+  secret_arns:
+    description: Comma-separated list of secret ARNs to attach to the service.
+  detached:
+    description: Detached deployment without waiting for result.
+    default: "false"
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v6
+    - name: Install Packages
+      uses: awalsh128/cache-apt-pkgs-action@v1.5.3
+      with:
+        packages: curl jq jo
+    - name: Deploy Managed ECS Service
+      id: ecs-service-deployment
+      run: ${GITHUB_ACTION_PATH}/deploy.sh
+      shell: bash
+      env:
+        SERVICE: ${{ inputs.service }}
+        IMAGE: ${{ inputs.image }}
+        FORCE: ${{ inputs.force }}
+        SECRET_ARNS: ${{ inputs.secret_arns }}
+        DETACHED: ${{ inputs.detached }}
+        TOKEN: ${{ secrets.deploy-api-token }}
+        URL: ${{ secrets.deploy-url }}
