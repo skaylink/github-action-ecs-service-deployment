@@ -62,7 +62,7 @@ if [[ "${detached}" == "false" ]]; then
             -o /dev/null \
             -w "%{http_code}" \
             -H "x-api-token: ${token}" "${url}/v1/services/${service}/")"
-        if [ "${status}" -ne 202 ]; then
+        if [ "${status}" -eq 202 ]; then
             printf "\n\e[0;36mDeployment in progress ...\e[0m\n\n"
             sleep 5
             continue
