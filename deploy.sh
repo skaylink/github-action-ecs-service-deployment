@@ -48,8 +48,8 @@ deploy_result="$(curl \
     -w "%{http_code}" \
     -d@/tmp/params.json)"
 if [ "${deploy_result}" -ne 201 ]; then
-    printf "\n\e[1;31mDeployment failed ...\e[0m\n\n"
-    jq -C . /tmp/result.json
+    printf "\n\e[1;31mDeployment failed to start\e[0m\n\n"
+    jq . /tmp/result.json
     exit 1
 fi
 
@@ -68,10 +68,10 @@ if [[ "${detached}" == "false" ]]; then
             continue
         fi
         if [ "${status}" -eq 200 ]; then
-            printf "\n\e[1;32mDeployment succeeded ...\e[0m\n\n"
+            printf "\n\e[1;32mDeployment succeeded\e[0m\n\n"
             exit 0
         fi
-        printf "\n\e[1;31mDeployment failed ...\e[0m\n\n"
+        printf "\n\e[1;31mDeployment failed\e[0m\n\n"
         exit 1
     done
 fi
