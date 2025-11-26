@@ -37,7 +37,9 @@ fi
 
 jo -o /tmp/params.json image="${image}" force="${force}" secret_arns=:/tmp/secret_arns.json
 
-deploy_result="$(curl -X "PATCH" \
+deploy_result="$(curl \
+    -sf \
+    -X "PATCH" \
     "${url}/v1/services/${service}" \
     -H "accept: application/json" \
     -H "x-api-token: ${token}" \
@@ -47,7 +49,7 @@ deploy_result="$(curl -X "PATCH" \
     -d@/tmp/params.json)"
 if [ "${deploy_result}" -ne 201 ]; then
     printf "\n\e[1;31mDeployment failed ...\e[0m\n\n"
-    jq . /tmp/result.json
+    jq -C . /tmp/result.json
     exit 1
 fi
 
@@ -55,8 +57,8 @@ fi
 if [[ "${detached}" == "false" ]]; then
     while true; do
         status="$(curl \
-            --max-time 5 \
             -sf \
+            --max-time 5 \
             -o /dev/null \
             -w "%{http_code}" \
             -H "x-api-token: ${token}" "${url}/v1/services/${service}/")"
