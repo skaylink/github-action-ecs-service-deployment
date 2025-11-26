@@ -23,8 +23,6 @@ secret_arns="${SECRET_ARNS}"
 # shellcheck disable=SC2153
 detached="${DETACHED}"
 
-printf "\n\e[1;36mPreparing upload ...\e[0m\n\n"
-
 ### start deployment
 printf "\n\e[1;36mCreating deployment ...\e[0m\n\n"
 if [[ -n "${secret_arns}" ]]; then
