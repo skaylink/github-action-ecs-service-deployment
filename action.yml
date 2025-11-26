@@ -6,6 +6,12 @@ branding:
   icon: package
   color: orange
 inputs:
+  token:
+    description: Deployment API token.
+    required: true
+  url:
+    description: Deployment API url.
+    required: true
   service:
     description: The name of the ECS service to update.
     required: true
@@ -37,5 +43,5 @@ runs:
         FORCE: ${{ inputs.force }}
         SECRET_ARNS: ${{ inputs.secret_arns }}
         DETACHED: ${{ inputs.detached }}
-        TOKEN: ${{ secrets.deploy-api-token }}
-        URL: ${{ secrets.deploy-url }}
+        TOKEN: ${{ inputs.token }}
+        URL: ${{ inputs.url }}
