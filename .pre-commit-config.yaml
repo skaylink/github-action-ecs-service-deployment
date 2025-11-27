@@ -22,3 +22,11 @@ repos:
     rev: v0.11.0
     hooks:
       - id: shellcheck
+  - repo: https://github.com/mxab/pre-commit-trivy.git
+    rev: v0.16.0
+    hooks:
+      - id: trivyfs-docker
+        args:
+          - "--scanners"
+          - "secret"
+          - .
