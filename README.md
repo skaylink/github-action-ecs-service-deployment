@@ -2,6 +2,22 @@
 
 A Github Action to deploy Skaylink Managed AWS ECS Services.
 
+Example:
+
+```yaml
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Service
+        uses: skaylink/github-action-ecs-service-deployment
+        with:
+          token: ${{ secret.API_TOKEN }}
+          url: ${{ secret.API_URL }}
+          service: my-example-service
+          image: my/image:new-version
+```
+
 ## Inputs
 
 | Input | Required? | Default | Description |
