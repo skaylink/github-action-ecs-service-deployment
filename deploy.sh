@@ -2,7 +2,7 @@
 
 set -e
 
-if [ "${DEBUG}" -eq 1 ]; then
+if [ "${DEBUG:-0}" -eq 1 ]; then
     set -x
 fi
 
