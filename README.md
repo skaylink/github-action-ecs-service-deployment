@@ -6,7 +6,9 @@ A Github Action to deploy Skaylink Managed AWS ECS Services.
 
 | Input | Required? | Default | Description |
 | ----- | --------- | ------- | ----------- |
-| `token` | `true` |  | Deployment API token. (please use `${{ secret.<your-secret-name> }}`) |
+| `token` | `true*` (either `token` or `client_id` and `client_secret` are required) |  | Deployment API token. (please use `${{ secret.<your-secret-name> }}`) |
+| `client_id` | `true*` (either `token` or `client_id` and `client_secret` are required) |  | Deployment API client id. (please use `${{ secret.<your-secret-name> }}`) |
+| `client_secret` | `true*` (either `token` or `client_id` and `client_secret` are required) |  | Deployment API client secret. (please use `${{ secret.<your-secret-name> }}`) |
 | `url` | `true` |  | Deployment API url. (please use `${{ secret.<your-secret-name> }}`) |
 | `service` | `true` |  | The name of the ECS service to update. |
 | `image` | `true` |  | The container image to use for the service. |
@@ -51,7 +53,8 @@ jobs:
         uses: skaylink/github-action-ecs-service-deployment
         id: deploy-service
         with:
-          token: ${{ secrets.DEPLOYMENT_TOKEN }}
+          client_id: ${{ secrets.DEPLOYMENT_CLIENT_ID }}
+          client_secret: ${{ secrets.DEPLOYMENT_CLIENT_SECRET }}
           url: ${{ secrets.DEPLOYMENT_URL }}
           service: ${{ secrets.DEPLOYMENT_SERVICE }}
           image: ${{ steps.login-ecr.outputs.registry }}/$REPOSITORY:${{ github.ref_name }}
