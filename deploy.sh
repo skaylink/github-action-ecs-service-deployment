@@ -40,11 +40,11 @@ fi
 jo -o /tmp/params.json image="${image}" force="${force}" secret_arns=:/tmp/secret_arns.json
 
 deploy_result="$(curl \
-    -sf \
+    -s \
     -X "PATCH" \
     "${url}/v1/services/${service}" \
     -H "accept: application/json" \
-    -H "x-api-token: ${token}" \
+    -H "x-api-key: ${token}" \
     -H "Content-Type: application/json" \
     -o /tmp/result.json \
     -w "%{http_code}" \
@@ -59,11 +59,11 @@ fi
 if [[ "${detached}" == "false" ]]; then
     while true; do
         status="$(curl \
-            -sf \
+            -s \
             --max-time 5 \
             -o /dev/null \
             -w "%{http_code}" \
-            -H "x-api-token: ${token}" "${url}/v1/services/${service}/")"
+            -H "x-api-key: ${token}" "${url}/v1/services/${service}/")"
         if [ "${status}" -eq 202 ]; then
             printf "\n\e[0;36mDeployment in progress ...\e[0m\n\n"
             sleep 5
