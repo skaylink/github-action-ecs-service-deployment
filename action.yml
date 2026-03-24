@@ -45,3 +45,4 @@ runs:
         DETACHED: ${{ inputs.detached }}
         TOKEN: ${{ inputs.token }}
         URL: ${{ inputs.url }}
+        DEBUG: ${{ runner.debug }}
