@@ -51,7 +51,9 @@ deploy_result="$(curl \
     -d@/tmp/params.json)"
 if [ "${deploy_result}" -ne 201 ]; then
     printf "\n\e[1;31mDeployment failed to start\e[0m\n\n"
-    cat /tmp/result.json
+    echo ""
+    jq . /tmp/result.json 2>/dev/null || cat /tmp/result.json | tee -a "${GITHUB_OUTPUT}"
+    echo ""
     exit 1
 fi
 
