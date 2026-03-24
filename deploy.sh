@@ -51,7 +51,7 @@ deploy_result="$(curl \
     -d@/tmp/params.json)"
 if [ "${deploy_result}" -ne 201 ]; then
     printf "\n\e[1;31mDeployment failed to start\e[0m\n\n"
-    jq . /tmp/result.json
+    cat /tmp/result.json
     exit 1
 fi
 
