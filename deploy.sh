@@ -2,6 +2,10 @@
 
 set -e
 
+if [ "${DEBUG}" -eq 1 ]; then
+    set -x
+fi
+
 # required variables
 set -u
 # redefine variables from ENV to prevent SC2154
