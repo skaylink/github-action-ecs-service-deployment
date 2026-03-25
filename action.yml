@@ -8,7 +8,10 @@ branding:
 inputs:
   token:
     description: Deployment API token.
-    required: true
+  client_id:
+    description: Deployment API client id.
+  client_secret:
+    description: Deployment API client secret.
   url:
     description: Deployment API url.
     required: true
@@ -45,4 +48,6 @@ runs:
         DETACHED: ${{ inputs.detached }}
         TOKEN: ${{ inputs.token }}
         URL: ${{ inputs.url }}
+        CLIENT_ID: ${{ inputs.client_id }}
+        CLIENT_SECRET: ${{ inputs.client_secret }}
         DEBUG: ${{ runner.debug }}
