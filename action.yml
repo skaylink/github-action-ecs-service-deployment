@@ -28,6 +28,10 @@ inputs:
   detached:
     description: Detached deployment without waiting for result.
     default: "false"
+  timeout:
+    description: Timeout for connections to the API. Defaults to 10.
+    default: "10"
+
 runs:
   using: composite
   steps:
@@ -51,3 +55,4 @@ runs:
         CLIENT_ID: ${{ inputs.client_id }}
         CLIENT_SECRET: ${{ inputs.client_secret }}
         DEBUG: ${{ runner.debug }}
+        TIMEOUT: ${{ inputs.timeout }}

@@ -15,6 +15,7 @@ A Github Action to deploy Skaylink Managed AWS ECS Services.
 | `force` | `false` | `false` | Force deployment of same image. |
 | `secret_arns` | `false` | | Comma-separated list of secret ARNs to attach to the service. |
 | `detached` | `false` | `false` | Detached deployment without waiting for result. |
+| `timeout` | `false` | `10` | Timeout for connections to the API. |
 
 ## Example
 
