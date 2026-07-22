@@ -59,6 +59,8 @@ force="${FORCE}"
 secret_arns="${SECRET_ARNS}"
 # shellcheck disable=SC2153
 detached="${DETACHED}"
+# shellcheck disable=SC2153
+timeout="${TIMEOUT:-10}"
 
 ### start deployment
 printf "\n\e[1;36mCreating deployment ...\e[0m\n\n"
@@ -95,7 +97,7 @@ if [[ "${detached}" == "false" ]]; then
     while true; do
         status="$(curl \
             -s \
-            --max-time 5 \
+            --max-time "${timeout}" \
             -o /dev/null \
             -w "%{http_code}" \
             -H "${_auth}" "${url}/v1/services/${service}/")"
