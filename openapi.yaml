@@ -1,0 +1,417 @@
+openapi: 3.1.0
+info:
+  title: ECS Service Deployment
+  version: 26.10.0
+servers:
+  - url: ''
+paths:
+  /v1/tasks/{task}:
+    get:
+      tags:
+        - Tasks
+      summary: GET /v1/tasks/{task}
+      operationId: get_task
+      parameters:
+        - required: true
+          schema:
+            type: string
+            pattern: ^[a-zA-Z0-9_-]+$
+            title: Task
+          name: task
+          in: path
+      responses:
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '200':
+          description: OK
+          content:
+            application/json: {}
+        '202':
+          description: Accepted
+          content:
+            application/json: {}
+        '401':
+          description: Unauthorized
+          content:
+            application/json: {}
+        '404':
+          description: Not Found
+          content:
+            application/json: {}
+      security:
+        - ApiKeyAuth: []
+        - OAuth2ClientCredentials: []
+    patch:
+      tags:
+        - Tasks
+      summary: Update an ECS scheduled task.
+      description: Update an ECS scheduled task.
+      operationId: patch_task
+      parameters:
+        - required: true
+          schema:
+            type: string
+            pattern: ^[a-zA-Z0-9_-]+$
+            title: Task
+          name: task
+          in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskDeploymentRequest'
+        required: true
+      responses:
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '200':
+          description: OK
+          content:
+            application/json: {}
+        '401':
+          description: Unauthorized
+          content:
+            application/json: {}
+        '202':
+          description: Accepted
+          content:
+            application/json: {}
+        '417':
+          description: Expectation Failed
+          content:
+            application/json: {}
+        '201':
+          description: Created
+          content:
+            application/json: {}
+      security:
+        - ApiKeyAuth: []
+        - OAuth2ClientCredentials: []
+  /v1/services/{service}:
+    get:
+      tags:
+        - Services
+      summary: GET /v1/services/{service}
+      operationId: get_service
+      parameters:
+        - required: true
+          schema:
+            type: string
+            pattern: ^[a-zA-Z0-9_-]+$
+            title: Service
+          name: service
+          in: path
+      responses:
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '200':
+          description: OK
+          content:
+            application/json: {}
+        '202':
+          description: Accepted
+          content:
+            application/json: {}
+        '401':
+          description: Unauthorized
+          content:
+            application/json: {}
+        '404':
+          description: Not Found
+          content:
+            application/json: {}
+        '417':
+          description: Expectation Failed
+          content:
+            application/json: {}
+      security:
+        - ApiKeyAuth: []
+        - OAuth2ClientCredentials: []
+    patch:
+      tags:
+        - Services
+      summary: Update an ECS service.
+      description: Update an ECS service.
+      operationId: patch_service
+      parameters:
+        - required: true
+          schema:
+            type: string
+            pattern: ^[a-zA-Z0-9_-]+$
+            title: Service
+          name: service
+          in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceDeploymentRequest'
+        required: true
+      responses:
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '200':
+          description: OK
+          content:
+            application/json: {}
+        '401':
+          description: Unauthorized
+          content:
+            application/json: {}
+        '202':
+          description: Accepted
+          content:
+            application/json: {}
+        '417':
+          description: Expectation Failed
+          content:
+            application/json: {}
+        '201':
+          description: Created
+          content:
+            application/json: {}
+      security:
+        - ApiKeyAuth: []
+        - OAuth2ClientCredentials: []
+  /v1/tasks:
+    get:
+      tags:
+        - Tasks
+      summary: Get available ECS tasks.
+      description: Get available ECS tasks.
+      operationId: get_tasks
+      responses:
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  type: string
+                type: array
+                example:
+                  - task-a
+                  - task-b
+        '401':
+          description: Unauthorized
+          content:
+            application/json: {}
+      security:
+        - ApiKeyAuth: []
+        - OAuth2ClientCredentials: []
+  /v1/services:
+    get:
+      tags:
+        - Services
+      summary: Get available ECS services.
+      description: Get available ECS services.
+      operationId: get_services
+      responses:
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  type: string
+                type: array
+                example:
+                  - service-a
+                  - service-b
+        '401':
+          description: Unauthorized
+          content:
+            application/json: {}
+      security:
+        - ApiKeyAuth: []
+        - OAuth2ClientCredentials: []
+  /token:
+    post:
+      tags:
+        - Authentication
+      summary: Obtain token using machine credentials (client_id + client_secret).
+      description: Obtain token.
+      operationId: post_token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRequest'
+        required: true
+      responses:
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                properties:
+                  access_token:
+                    type: string
+                    title: Access Token
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                  expired_at:
+                    type: string
+                    title: Expired At
+                    example: '2026-03-24T12:54:13Z'
+                type: object
+                required:
+                  - access_token
+                  - expired_at
+                title: TokenResponse
+        '401':
+          description: Unauthorized
+          content:
+            application/json: {}
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ServiceDeploymentRequest:
+      properties:
+        image:
+          type: string
+          minLength: 1
+          title: Image
+          description: The container image to use for the service
+        force:
+          anyOf:
+            - type: boolean
+            - type: 'null'
+          title: Force
+          description: Force deployment of same image
+          default: false
+        secret_arns:
+          anyOf:
+            - items:
+                type: string
+                pattern: arn:aws:secretsmanager:[a-z0-9-]+:[0-9]+:secret:.*
+              type: array
+            - type: 'null'
+          title: Secret Arns
+          description: List of secret ARNs to attach to the service
+          default: []
+      type: object
+      required:
+        - image
+      title: ServiceDeploymentRequest
+      description: ECS Service Deployment Request.
+    TaskDeploymentRequest:
+      properties:
+        image:
+          type: string
+          minLength: 1
+          title: Image
+          description: The container image to use for the service
+        force:
+          anyOf:
+            - type: boolean
+            - type: 'null'
+          title: Force
+          description: Force deployment of same image
+          default: false
+        schedule_expression:
+          anyOf:
+            - type: string
+              minLength: 1
+            - type: 'null'
+          title: Schedule expression
+          description: The schedule expression for cron tasks
+      type: object
+      required:
+        - image
+      title: TaskDeploymentRequest
+      description: 'ECS Task Deployment Request.
+
+        Triggered by either scheduled or event pattern.'
+    TokenRequest:
+      properties:
+        client_id:
+          type: string
+          title: Client Id
+        client_secret:
+          type: string
+          title: Client Secret
+      type: object
+      required:
+        - client_id
+        - client_secret
+      title: TokenRequest
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+          type: array
+          title: Location
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+        - loc
+        - msg
+        - type
+      title: ValidationError
+    ResponseValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: ResponseValidationError
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+    OAuth2ClientCredentials:
+      type: oauth2
+      flows:
+        clientCredentials:
+          scopes: {}
+          tokenUrl: token
