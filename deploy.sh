@@ -31,6 +31,8 @@ force="${FORCE}"
 # shellcheck disable=SC2153
 secret_arns="${SECRET_ARNS}"
 # shellcheck disable=SC2153
+desired_count="${DESIRED_COUNT}"
+# shellcheck disable=SC2153
 schedule_expression="${SCHEDULE_EXPRESSION}"
 # shellcheck disable=SC2153
 detached="${DETACHED}"
@@ -50,8 +52,18 @@ elif [[ -n "${task}" && -z "${service}" ]]; then
         printf "\n\e[1;31msecret_arns is only supported for services\e[0m\n\n"
         exit 1
     fi
+    if [[ -n "${desired_count}" ]]; then
+        printf "\n\e[1;31mdesired_count is only supported for services\e[0m\n\n"
+        exit 1
+    fi
 else
     printf "\n\e[1;31mExactly one of service or task is required\e[0m\n\n"
+    exit 1
+fi
+
+### validate desired_count (non-negative integer, 0 scales to zero)
+if [[ -n "${desired_count}" && ! "${desired_count}" =~ ^[0-9]+$ ]]; then
+    printf "\n\e[1;31mdesired_count must be a non-negative integer\e[0m\n\n"
     exit 1
 fi
 
@@ -97,6 +109,10 @@ if [[ -n "${service}" ]]; then
         echo "[]" >/tmp/secret_arns.json
     fi
     params+=(secret_arns=:/tmp/secret_arns.json)
+    # jo emits numeric strings as JSON numbers, 0 is a valid value
+    if [[ -n "${desired_count}" ]]; then
+        params+=(desired_count="${desired_count}")
+    fi
 elif [[ -n "${schedule_expression}" ]]; then
     params+=(schedule_expression="${schedule_expression}")
 fi

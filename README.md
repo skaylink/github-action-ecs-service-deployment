@@ -15,6 +15,7 @@ A Github Action to deploy Skaylink Managed AWS ECS Services and Scheduled Tasks.
 | `image` | `true` |  | The container image to use for the service or task. |
 | `force` | `false` | `false` | Force deployment of same image. |
 | `secret_arns` | `false` | | Comma-separated list of secret ARNs to attach to the service (services only). |
+| `desired_count` | `false` | | Desired number of running tasks for the service, `0` scales to zero (services only). |
 | `schedule_expression` | `false` | | Schedule expression for cron tasks, e.g. `cron(0 3 * * ? *)` (tasks only). |
 | `detached` | `false` | `false` | Detached deployment without waiting for result. |
 | `timeout` | `false` | `10` | Timeout for connections to the API. |

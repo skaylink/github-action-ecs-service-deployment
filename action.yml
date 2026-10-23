@@ -26,6 +26,8 @@ inputs:
     description: Force deployment of same image.
   secret_arns:
     description: Comma-separated list of secret ARNs to attach to the service (services only).
+  desired_count:
+    description: Desired number of running tasks for the service, 0 scales to zero (services only).
   schedule_expression:
     description: Schedule expression for cron tasks (tasks only).
   detached:
@@ -53,6 +55,7 @@ runs:
         IMAGE: ${{ inputs.image }}
         FORCE: ${{ inputs.force }}
         SECRET_ARNS: ${{ inputs.secret_arns }}
+        DESIRED_COUNT: ${{ inputs.desired_count }}
         SCHEDULE_EXPRESSION: ${{ inputs.schedule_expression }}
         DETACHED: ${{ inputs.detached }}
         TOKEN: ${{ inputs.token }}
