@@ -1,0 +1,18 @@
+# Dependabot version updates (added across the awhpf team).
+# Security updates run separately via the repo security settings.
+version: 2
+updates:
+- package-ecosystem: github-actions
+  directory: /
+  schedule:
+    interval: weekly
+    day: monday
+  labels:
+  - dependencies
+  - github-actions
+  cooldown:
+    default-days: 7
+  groups:
+    github-actions:
+      patterns:
+      - '*'
