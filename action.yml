@@ -38,9 +38,9 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - name: Install Packages
-      uses: awalsh128/cache-apt-pkgs-action@v1.5.3
+      uses: awalsh128/cache-apt-pkgs-action@v1.6.3
       with:
         packages: curl jq jo
     - name: Deploy Managed ECS Service or Task
